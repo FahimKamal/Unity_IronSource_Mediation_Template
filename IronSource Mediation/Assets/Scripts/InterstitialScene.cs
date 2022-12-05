@@ -10,9 +10,15 @@ public class InterstitialScene : MonoBehaviour
     private void Start()
     {
         Instantiate(fadeScreen, transform).GetComponent<FadeScreenController>().FadeOut();
+        IronSource.Agent.loadInterstitial();
     }
 
-    public void AdNotLoadedPopup()
+    private void OnApplicationPause(bool isPaused) {                 
+        IronSource.Agent.onApplicationPause(isPaused);
+    }
+
+
+    private void AdNotLoadedPopup()
     {
         var popup = Instantiate(popupPrefab, transform);
         popup.GetComponent<SetPopup>().SetPopupData("Notification", "Ad not loaded yet.");
@@ -20,10 +26,25 @@ public class InterstitialScene : MonoBehaviour
     
     public void AdShowedPopup()
     {
+        if (IronSource.Agent.isInterstitialReady())
+        {
+            IronSourceInterstitialEvents.onAdClosedEvent += OnInterstitialClosed;
+            IronSource.Agent.showInterstitial();
+        }
+        else
+        {
+            AdNotLoadedPopup();
+            IronSourceInterstitialEvents.onAdClosedEvent -= OnInterstitialClosed;
+        }
+        
+    }
+
+    private void OnInterstitialClosed(IronSourceAdInfo obj)
+    {
         var popup = Instantiate(popupPrefab, transform);
         popup.GetComponent<SetPopup>().SetPopupData("Notification", "Ad was showed successfully.\nNew ad is now loading.");
     }
-    
+
     public void OnBackButtonPressed()
     {
         StartCoroutine(OpenMainScene());

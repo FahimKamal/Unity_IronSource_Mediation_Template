@@ -356,6 +356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupPrefab: {fileID: 518775712009529825, guid: bfa61a3f46b18624bbff25cec1570476, type: 3}
   fadeScreen: {fileID: 139449812157717623, guid: cb10bff95c1c2854397042cc2d017f05, type: 3}
+  ironSourceAppKey: 17a4eab05
 --- !u!4 &412008078
 Transform:
   m_ObjectHideFlags: 0

@@ -11,6 +11,11 @@ public class RewardedScene : MonoBehaviour
     {
         Instantiate(fadeScreen, transform).GetComponent<FadeScreenController>().FadeOut();
     }
+
+    private void OnApplicationPause(bool isPaused) {                 
+        IronSource.Agent.onApplicationPause(isPaused);
+    }
+
     
     public void AdNotLoadedPopup()
     {

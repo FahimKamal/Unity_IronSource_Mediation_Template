@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,13 +8,29 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject popupPrefab;
     [SerializeField] private GameObject fadeScreen;
+    
+    [SerializeField] private string ironSourceAppKey = "17a4eab05";
 
     private void Start()
     {
         Instantiate(fadeScreen, transform).GetComponent<FadeScreenController>().FadeOut();
-        
+        IronSource.Agent.init (ironSourceAppKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.BANNER);
+
+        IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
+
+        IronSourceEvents.onBannerAdLoadedEvent += OnBannerAdLoadedEvent;
     }
 
+    private void OnBannerAdLoadedEvent()
+    {
+        var popup = Instantiate(popupPrefab, transform);
+        popup.GetComponent<SetPopup>().SetPopupData("Notification", "Banner ad is successfully loaded.");
+    }
+
+    private void OnApplicationPause(bool isPaused) {                 
+        IronSource.Agent.onApplicationPause(isPaused);
+    }
+    
     public void OnBannerOnButtonClick()
     {
         var popup = Instantiate(popupPrefab, transform);
