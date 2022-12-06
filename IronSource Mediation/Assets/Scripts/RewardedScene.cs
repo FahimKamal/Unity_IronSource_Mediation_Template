@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,21 +22,25 @@ public class RewardedScene : MotherScript
     private void OnApplicationPause(bool isPaused) {                 
         IronSource.Agent.onApplicationPause(isPaused);
     }
-
-    public void On100RewardButtonClick()
+    
+    private void PlayRewardVideo(Action<IronSourcePlacement, IronSourceAdInfo> rewardAction)
     {
         var isReady = IronSource.Agent.isRewardedVideoAvailable();
         if (isReady)
         {
-            IronSourceRewardedVideoEvents.onAdRewardedEvent += Reward100Coins;
+            IronSourceRewardedVideoEvents.onAdRewardedEvent += rewardAction;
             IronSource.Agent.showRewardedVideo();
         }
         else
         {
-            IronSourceRewardedVideoEvents.onAdRewardedEvent -= Reward100Coins;
+            IronSourceRewardedVideoEvents.onAdRewardedEvent -= rewardAction;
             AdNotLoadedPopup();
         }
-        
+    }
+
+    public void On100RewardButtonClick()
+    {
+        PlayRewardVideo(Reward100Coins);
     }
     
     private void Reward100Coins(IronSourcePlacement ironSourcePlacement, IronSourceAdInfo ironSourceAdInfo)
@@ -47,17 +52,7 @@ public class RewardedScene : MotherScript
     
     public void On200RewardButtonClick()
     {
-        var isReady = IronSource.Agent.isRewardedVideoAvailable();
-        if (isReady)
-        {
-            IronSourceRewardedVideoEvents.onAdRewardedEvent += Reward200Coins;
-            IronSource.Agent.showRewardedVideo();
-        }
-        else
-        {
-            IronSourceRewardedVideoEvents.onAdRewardedEvent -= Reward200Coins;
-            AdNotLoadedPopup();
-        }
+        PlayRewardVideo(Reward200Coins);
     }
     
     private void Reward200Coins(IronSourcePlacement ironSourcePlacement, IronSourceAdInfo ironSourceAdInfo)
@@ -69,17 +64,7 @@ public class RewardedScene : MotherScript
     
     public void On300RewardButtonClick()
     {
-        var isReady = IronSource.Agent.isRewardedVideoAvailable();
-        if (isReady)
-        {
-            IronSourceRewardedVideoEvents.onAdRewardedEvent += Reward300Coins;
-            IronSource.Agent.showRewardedVideo();
-        }
-        else
-        {
-            IronSourceRewardedVideoEvents.onAdRewardedEvent -= Reward300Coins;
-            AdNotLoadedPopup();
-        }
+        PlayRewardVideo(Reward300Coins);
     }
 
     private void Reward300Coins(IronSourcePlacement ironSourcePlacement, IronSourceAdInfo ironSourceAdInfo)
