@@ -2,14 +2,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InterstitialScene : MonoBehaviour
+public class InterstitialScene : MotherScript
 {
-    [SerializeField] private GameObject popupPrefab;
-    [SerializeField] private GameObject fadeScreen;
-
     private void Start()
     {
-        Instantiate(fadeScreen, transform).GetComponent<FadeScreenController>().FadeOut();
+        FadeOut();
         IronSource.Agent.loadInterstitial();
     }
 
@@ -17,13 +14,6 @@ public class InterstitialScene : MonoBehaviour
         IronSource.Agent.onApplicationPause(isPaused);
     }
 
-
-    private void AdNotLoadedPopup()
-    {
-        var popup = Instantiate(popupPrefab, transform);
-        popup.GetComponent<SetPopup>().SetPopupData("Notification", "Ad not loaded yet.");
-    }
-    
     public void AdShowedPopup()
     {
         if (IronSource.Agent.isInterstitialReady())
@@ -36,13 +26,18 @@ public class InterstitialScene : MonoBehaviour
             AdNotLoadedPopup();
             IronSourceInterstitialEvents.onAdClosedEvent -= OnInterstitialClosed;
         }
-        
     }
-
+    
     private void OnInterstitialClosed(IronSourceAdInfo obj)
     {
-        var popup = Instantiate(popupPrefab, transform);
-        popup.GetComponent<SetPopup>().SetPopupData("Notification", "Ad was showed successfully.\nNew ad is now loading.");
+        ShowPopup("Notification", "Ad was showed successfully.\nNew ad is now loading.");
+        IronSource.Agent.loadInterstitial();
+    }
+    
+    public void OnCheckButtonClicked()
+    {
+        var isReady = IronSource.Agent.isInterstitialReady();
+        ShowPopup("Notification", isReady ? "Ad is ready to show." : "Ad is not ready to show.");
     }
 
     public void OnBackButtonPressed()

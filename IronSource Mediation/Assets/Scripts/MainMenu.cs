@@ -1,30 +1,33 @@
-using System;
 using System.Collections;
-using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : MotherScript
 {
-    [SerializeField] private GameObject popupPrefab;
-    [SerializeField] private GameObject fadeScreen;
-    
+
     [SerializeField] private string ironSourceAppKey = "17a4eab05";
+
+    private void Awake()
+    {
+        IronSource.Agent.init (ironSourceAppKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.BANNER);
+    }
 
     private void Start()
     {
-        Instantiate(fadeScreen, transform).GetComponent<FadeScreenController>().FadeOut();
-        IronSource.Agent.init (ironSourceAppKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.BANNER);
+        FadeOut();
 
+        LoadBanner();
+    }
+    
+    public void LoadBanner()
+    {
         IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
-
         IronSourceEvents.onBannerAdLoadedEvent += OnBannerAdLoadedEvent;
     }
 
     private void OnBannerAdLoadedEvent()
     {
-        var popup = Instantiate(popupPrefab, transform);
-        popup.GetComponent<SetPopup>().SetPopupData("Notification", "Banner ad is successfully loaded.");
+        ShowPopup("Notification", "Banner ad is successfully loaded.");
     }
 
     private void OnApplicationPause(bool isPaused) {                 
@@ -33,14 +36,12 @@ public class MainMenu : MonoBehaviour
     
     public void OnBannerOnButtonClick()
     {
-        var popup = Instantiate(popupPrefab, transform);
-        popup.GetComponent<SetPopup>().SetPopupData("Banner", "You will see the test banner after this screen goes away.");
+        ShowPopup("Notification", "You will see the test banner after this screen goes away.");
     }
     
     public void OnBannerOffButtonClick()
     {
-        var popup = Instantiate(popupPrefab, transform);
-        popup.GetComponent<SetPopup>().SetPopupData("Banner", "Test banner will now hide after this screen goes away.");
+        ShowPopup("Notification", "Test banner will now hide after this screen goes away.");
     }
 
     public void OnInterstitialButtonClick()
@@ -60,21 +61,21 @@ public class MainMenu : MonoBehaviour
 
     private IEnumerator ExitGame()
     {
-        Instantiate(fadeScreen, transform).GetComponent<FadeScreenController>().FadeIn();
+        FadeIn();
         yield return new WaitForSeconds(1.2f);
         Application.Quit();
     }
 
     private IEnumerator OpenRewardedScene()
     {
-        Instantiate(fadeScreen, transform).GetComponent<FadeScreenController>().FadeIn();
+        FadeIn();
         yield return new WaitForSeconds(1.2f);
         SceneManager.LoadScene("Scenes/Rewarded Ad Scene");
     }
 
     private IEnumerator OpenInterstitialScene()
     {
-        Instantiate(fadeScreen, transform).GetComponent<FadeScreenController>().FadeIn();
+        FadeIn();
         yield return new WaitForSeconds(1.2f);
         SceneManager.LoadScene("Scenes/Interstitial Scene");
     }

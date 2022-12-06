@@ -2,43 +2,97 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RewardedScene : MonoBehaviour
+public class RewardedScene : MotherScript
 {
-    [SerializeField] private GameObject popupPrefab;
-    [SerializeField] private GameObject fadeScreen;
-
     private void Start()
     {
-        Instantiate(fadeScreen, transform).GetComponent<FadeScreenController>().FadeOut();
+        FadeOut();
+        
+        IronSource.Agent.shouldTrackNetworkState(true);
+        IronSource.Agent.loadRewardedVideo();
+        IronSourceEvents.onRewardedVideoAvailabilityChangedEvent += OnRewardedVideoAvailabilityChangedEvent;
+    }
+
+    private void OnRewardedVideoAvailabilityChangedEvent(bool obj)
+    {
+        ShowPopup("Notification", "Video is ready to play");
     }
 
     private void OnApplicationPause(bool isPaused) {                 
         IronSource.Agent.onApplicationPause(isPaused);
     }
 
-    
-    public void AdNotLoadedPopup()
-    {
-        var popup = Instantiate(popupPrefab, transform);
-        popup.GetComponent<SetPopup>().SetPopupData("Notification", "Ad not loaded yet.");
-    }
-
     public void On100RewardButtonClick()
     {
-        var popup = Instantiate(popupPrefab, transform);
-        popup.GetComponent<SetPopup>().SetPopupData("Notification", "Ad was showed successfully and you have been rewarded 100 coin.\nNew ad is now loading.");
+        var isReady = IronSource.Agent.isRewardedVideoAvailable();
+        if (isReady)
+        {
+            IronSourceRewardedVideoEvents.onAdRewardedEvent += Reward100Coins;
+            IronSource.Agent.showRewardedVideo();
+        }
+        else
+        {
+            IronSourceRewardedVideoEvents.onAdRewardedEvent -= Reward100Coins;
+            AdNotLoadedPopup();
+        }
+        
+    }
+    
+    private void Reward100Coins(IronSourcePlacement ironSourcePlacement, IronSourceAdInfo ironSourceAdInfo)
+    {
+        ShowPopup("Notification",
+            "Ad was showed successfully and you have been rewarded 100 coin.\nNew ad is now loading.");
+        IronSource.Agent.loadRewardedVideo();
     }
     
     public void On200RewardButtonClick()
     {
-        var popup = Instantiate(popupPrefab, transform);
-        popup.GetComponent<SetPopup>().SetPopupData("Notification", "Ad was showed successfully and you have been rewarded 200 coin.\nNew ad is now loading.");
+        var isReady = IronSource.Agent.isRewardedVideoAvailable();
+        if (isReady)
+        {
+            IronSourceRewardedVideoEvents.onAdRewardedEvent += Reward200Coins;
+            IronSource.Agent.showRewardedVideo();
+        }
+        else
+        {
+            IronSourceRewardedVideoEvents.onAdRewardedEvent -= Reward200Coins;
+            AdNotLoadedPopup();
+        }
+    }
+    
+    private void Reward200Coins(IronSourcePlacement ironSourcePlacement, IronSourceAdInfo ironSourceAdInfo)
+    {
+        ShowPopup("Notification",
+            "Ad was showed successfully and you have been rewarded 200 coin.\nNew ad is now loading.");
+        IronSource.Agent.loadRewardedVideo();
     }
     
     public void On300RewardButtonClick()
     {
-        var popup = Instantiate(popupPrefab, transform);
-        popup.GetComponent<SetPopup>().SetPopupData("Notification", "Ad was showed successfully and you have been rewarded 300 coin.\nNew ad is now loading.");
+        var isReady = IronSource.Agent.isRewardedVideoAvailable();
+        if (isReady)
+        {
+            IronSourceRewardedVideoEvents.onAdRewardedEvent += Reward300Coins;
+            IronSource.Agent.showRewardedVideo();
+        }
+        else
+        {
+            IronSourceRewardedVideoEvents.onAdRewardedEvent -= Reward300Coins;
+            AdNotLoadedPopup();
+        }
+    }
+
+    private void Reward300Coins(IronSourcePlacement ironSourcePlacement, IronSourceAdInfo ironSourceAdInfo)
+    {
+        ShowPopup("Notification",
+            "Ad was showed successfully and you have been rewarded 300 coin.\nNew ad is now loading.");
+        IronSource.Agent.loadRewardedVideo();
+    }
+    
+    public void OnCheckButtonClick()
+    {
+        var isReady = IronSource.Agent.isRewardedVideoAvailable();
+        ShowPopup("Notification", isReady ? "Ad is ready to play" : "Ad is not ready to play");
     }
     
     public void OnBackButtonPressed()
