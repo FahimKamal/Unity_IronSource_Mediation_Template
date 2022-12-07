@@ -27,4 +27,6 @@ public class CallBackManager : MonoBehaviour
     
     public UnityEvent onPopupClosed;
     public UnityEvent onPopupOpened;
+    
+    public UnityEvent onCoinCollected;
 }

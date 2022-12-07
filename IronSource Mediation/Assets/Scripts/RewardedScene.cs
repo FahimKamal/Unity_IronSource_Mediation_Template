@@ -1,83 +1,111 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class RewardedScene : MotherScript
 {
+    [SerializeField] private TMP_Text coinText;
+
+    private void OnEnable()
+    {
+        CallBackManager.Instance.onCoinCollected.AddListener(UpdateCoinText);
+    }
+    
+    private void OnDisable()
+    {
+        CallBackManager.Instance.onCoinCollected.RemoveListener(UpdateCoinText);
+    }
+
     private void Start()
     {
         FadeOut();
         
-        IronSource.Agent.shouldTrackNetworkState(true);
-        IronSource.Agent.loadRewardedVideo();
-        IronSourceEvents.onRewardedVideoAvailabilityChangedEvent += OnRewardedVideoAvailabilityChangedEvent;
+        AdManager.Instance.LoadRewardedAd();
+
+        if (PlayerPrefs.HasKey("Coins"))
+        {
+            UpdateCoinText();
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Coins", 300);
+            UpdateCoinText();
+        }
     }
 
-    private void OnRewardedVideoAvailabilityChangedEvent(bool obj)
+    private void UpdateCoinText()
     {
-        ShowPopup("Notification", "Video is ready to play");
+        coinText.text = "COIN: " + PlayerPrefs.GetInt("Coins");
     }
-
+  
     private void OnApplicationPause(bool isPaused) {                 
         IronSource.Agent.onApplicationPause(isPaused);
     }
     
-    private void PlayRewardVideo(Action<IronSourcePlacement, IronSourceAdInfo> rewardAction)
-    {
-        var isReady = IronSource.Agent.isRewardedVideoAvailable();
-        if (isReady)
-        {
-            IronSourceRewardedVideoEvents.onAdRewardedEvent += rewardAction;
-            IronSource.Agent.showRewardedVideo();
-        }
-        else
-        {
-            IronSourceRewardedVideoEvents.onAdRewardedEvent -= rewardAction;
-            AdNotLoadedPopup();
-        }
-    }
-
     public void On100RewardButtonClick()
     {
-        PlayRewardVideo(Reward100Coins);
+        AdManager.Instance.PlayRewardedAdVideo(Reward100Coins);
     }
     
     private void Reward100Coins(IronSourcePlacement ironSourcePlacement, IronSourceAdInfo ironSourceAdInfo)
     {
+        var coins = PlayerPrefs.GetInt("Coins");
+        coins += 100;
+        PlayerPrefs.SetInt("Coins", coins);
+        CallBackManager.Instance.onCoinCollected?.Invoke();
+        
         ShowPopup("Notification",
             "Ad was showed successfully and you have been rewarded 100 coin.\nNew ad is now loading.");
-        IronSource.Agent.loadRewardedVideo();
+        AdManager.Instance.LoadRewardedAd();
     }
     
     public void On200RewardButtonClick()
     {
-        PlayRewardVideo(Reward200Coins);
+        AdManager.Instance.PlayRewardedAdVideo(Reward200Coins);
     }
     
     private void Reward200Coins(IronSourcePlacement ironSourcePlacement, IronSourceAdInfo ironSourceAdInfo)
     {
+        var coins = PlayerPrefs.GetInt("Coins");
+        coins += 200;
+        PlayerPrefs.SetInt("Coins", coins);
+        CallBackManager.Instance.onCoinCollected?.Invoke();
+        
         ShowPopup("Notification",
             "Ad was showed successfully and you have been rewarded 200 coin.\nNew ad is now loading.");
-        IronSource.Agent.loadRewardedVideo();
+        AdManager.Instance.LoadRewardedAd();
     }
     
     public void On300RewardButtonClick()
     {
-        PlayRewardVideo(Reward300Coins);
+        AdManager.Instance.PlayRewardedAdVideo(Reward300Coins);
     }
 
     private void Reward300Coins(IronSourcePlacement ironSourcePlacement, IronSourceAdInfo ironSourceAdInfo)
     {
+        var coins = PlayerPrefs.GetInt("Coins");
+        coins += 300;
+        PlayerPrefs.SetInt("Coins", coins);
+        CallBackManager.Instance.onCoinCollected?.Invoke();
+        
         ShowPopup("Notification",
             "Ad was showed successfully and you have been rewarded 300 coin.\nNew ad is now loading.");
-        IronSource.Agent.loadRewardedVideo();
+        AdManager.Instance.LoadRewardedAd();
     }
     
     public void OnCheckButtonClick()
     {
-        var isReady = IronSource.Agent.isRewardedVideoAvailable();
+        var isReady = AdManager.Instance.IsRewardedAdReady();
         ShowPopup("Notification", isReady ? "Ad is ready to play" : "Ad is not ready to play");
+    }
+    
+    public void OnResetCoinsButtonClick()
+    {
+        ShowPopup("Notification", "Coin has been reset to 300");
+        PlayerPrefs.SetInt("Coins", 300);
+        UpdateCoinText();
     }
     
     public void OnBackButtonPressed()

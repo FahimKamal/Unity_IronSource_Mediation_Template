@@ -14,6 +14,12 @@ public class IronSourceRewardedVideoEvents : MonoBehaviour
     public static event Action <IronSourceAdInfo> onAdOpenedEvent;
     public static event Action <IronSourceAdInfo> onAdClosedEvent;
     public static event Action<IronSourcePlacement,IronSourceAdInfo> onAdRewardedEvent;
+    
+    public static void ResetOnAdRewardedEvent()
+    {
+        onAdRewardedEvent = null;
+    }
+    
     public static event Action<IronSourcePlacement,IronSourceAdInfo> onAdClickedEvent;
     public static event Action<IronSourceAdInfo> onAdAvailableEvent;
     public static event Action onAdUnavailableEvent;

@@ -26,6 +26,11 @@ public class IronSourceEvents : MonoBehaviour
     public static event Action<IronSourcePlacement> onRewardedVideoAdRewardedEvent;
     public static event Action<IronSourcePlacement> onRewardedVideoAdClickedEvent;
     public static event Action<bool> onRewardedVideoAvailabilityChangedEvent;
+    
+    public static void ResetOnRewardedVideoAvailabilityChangedEvent()
+    {
+        onRewardedVideoAvailabilityChangedEvent = null;
+    }
 
     public static event Action<IronSourceError> onRewardedVideoAdLoadFailedEvent;
     public static event Action onRewardedVideoAdReadyEvent;
@@ -61,6 +66,11 @@ public class IronSourceEvents : MonoBehaviour
     public static event Action<IronSourceError> onOfferwallShowFailedEvent;
 
     public static event Action onBannerAdLoadedEvent;
+    
+    public static void ResetOnBannerAdLoadedEvent()
+    {
+        onBannerAdLoadedEvent = null;
+    }
     public static event Action onBannerAdLeftApplicationEvent;
     public static event Action onBannerAdScreenDismissedEvent;
     public static event Action onBannerAdScreenPresentedEvent;

@@ -22,30 +22,7 @@ public class MainMenu : MotherScript
     {
         FadeOut();
 
-        LoadBanner();
-    }
-
-
-    private void LoadBanner()
-    {
-        IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.TOP);
-        IronSourceEvents.onBannerAdLoadedEvent += OnBannerAdLoadedEvent;
-    }
-    
-    private static void ShowBanner()
-    {
-        IronSource.Agent.displayBanner();
-    }
-    
-    private static void HideBanner()
-    {
-        
-        IronSource.Agent.hideBanner();
-    }
-
-    private void OnBannerAdLoadedEvent()
-    {
-        ShowPopup("Notification", "Banner ad is successfully loaded.");
+        AdManager.Instance.LoadBanner();
     }
 
     private void OnApplicationPause(bool isPaused) {                 
@@ -57,7 +34,7 @@ public class MainMenu : MotherScript
         ShowPopup("Notification", "You will see the test banner after this screen goes away.");
 
         CallBackManager.Instance.onPopupClosed.RemoveAllListeners();
-        CallBackManager.Instance.onPopupClosed.AddListener(ShowBanner);
+        CallBackManager.Instance.onPopupClosed.AddListener(AdManager.Instance.ShowBanner);
     }
     
     public void OnBannerOffButtonClick()
@@ -65,7 +42,7 @@ public class MainMenu : MotherScript
         ShowPopup("Notification", "Test banner will now hide after this screen goes away.");
         
         CallBackManager.Instance.onPopupClosed.RemoveAllListeners();
-        CallBackManager.Instance.onPopupClosed.AddListener(HideBanner);
+        CallBackManager.Instance.onPopupClosed.AddListener(AdManager.Instance.HideBanner);
     }
 
     public void OnInterstitialButtonClick()

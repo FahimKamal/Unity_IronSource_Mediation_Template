@@ -14,6 +14,12 @@ public class IronSourceInterstitialEvents : MonoBehaviour
     public static event Action<IronSourceError> onAdLoadFailedEvent;
     public static event Action<IronSourceAdInfo> onAdOpenedEvent;
     public static event Action<IronSourceAdInfo> onAdClosedEvent;
+    
+    public static void ResetOnAdClosedEvent()
+    {
+        onAdClosedEvent = null;
+    }
+    
     public static event Action<IronSourceAdInfo> onAdShowSucceededEvent;
     public static event Action<IronSourceError, IronSourceAdInfo> onAdShowFailedEvent;
     public static event Action<IronSourceAdInfo> onAdClickedEvent;
