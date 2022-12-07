@@ -28,6 +28,8 @@ public class SetPopup : MonoBehaviour
         yield return new WaitForSeconds(popupDuration);
         animationCom.Play("Popup Animation off");
         yield return new WaitForSeconds(0.5f);
+        CallBackManager.Instance.onPopupClosed?.Invoke();
+        
         Destroy(gameObject);
     }
 }

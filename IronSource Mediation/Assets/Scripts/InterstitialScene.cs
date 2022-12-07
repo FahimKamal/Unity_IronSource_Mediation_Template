@@ -47,7 +47,7 @@ public class InterstitialScene : MotherScript
     
     private IEnumerator OpenMainScene()
     {
-        Instantiate(fadeScreen, transform).GetComponent<FadeScreenController>().FadeIn();
+        FadeIn();
         yield return new WaitForSeconds(1.2f);
         SceneManager.LoadScene("Scenes/Main Scene");
     }

@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +12,12 @@ public class MainMenu : MotherScript
     private void Awake()
     {
         IronSource.Agent.init (ironSourceAppKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.BANNER);
+
+        if (GameObject.FindObjectOfType<CallBackManager>() == null)
+        {
+            var callBackManager = new GameObject("CallBackManager");
+            callBackManager.AddComponent<CallBackManager>();
+        }
     }
 
     private void Start()
@@ -18,11 +26,23 @@ public class MainMenu : MotherScript
 
         LoadBanner();
     }
-    
-    public void LoadBanner()
+
+
+    private void LoadBanner()
     {
-        IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
+        IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.TOP);
         IronSourceEvents.onBannerAdLoadedEvent += OnBannerAdLoadedEvent;
+    }
+    
+    private static void ShowBanner()
+    {
+        IronSource.Agent.displayBanner();
+    }
+    
+    private static void HideBanner()
+    {
+        
+        IronSource.Agent.hideBanner();
     }
 
     private void OnBannerAdLoadedEvent()
@@ -37,11 +57,17 @@ public class MainMenu : MotherScript
     public void OnBannerOnButtonClick()
     {
         ShowPopup("Notification", "You will see the test banner after this screen goes away.");
+
+        CallBackManager.Instance.onPopupClosed.RemoveAllListeners();
+        CallBackManager.Instance.onPopupClosed.AddListener(ShowBanner);
     }
     
     public void OnBannerOffButtonClick()
     {
         ShowPopup("Notification", "Test banner will now hide after this screen goes away.");
+        
+        CallBackManager.Instance.onPopupClosed.RemoveAllListeners();
+        CallBackManager.Instance.onPopupClosed.AddListener(HideBanner);
     }
 
     public void OnInterstitialButtonClick()
