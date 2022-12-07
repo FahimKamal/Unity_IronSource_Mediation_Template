@@ -20,6 +20,7 @@ public class SetPopup : MonoBehaviour
         this.title.text = title;
         this.description.text = description;
         animationCom.Play("Popup Animation on");
+        CallBackManager.Instance.onPopupOpened?.Invoke();
     }
     
     // Destroy the popup after 2 seconds
