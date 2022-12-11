@@ -15,18 +15,18 @@ public class CallBackManager : MonoBehaviour
         if (Instance != null)
         {
             Destroy(gameObject);
+            return;
         }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+        
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    
     }
 
     #endregion
     
-    public UnityEvent onPopupClosed;
-    public UnityEvent onPopupOpened;
+    public UnityEvent onPopupClosed = new UnityEvent();
+    public UnityEvent onPopupOpened = new UnityEvent();
     
-    public UnityEvent onCoinCollected;
+    public UnityEvent onCoinCollected = new UnityEvent();
 }

@@ -55,7 +55,7 @@ public class AdManager : MotherScript
     // Replace this method with your own logic or remove it completely
     private void OnBannerAdLoadedEvent()
     {
-        ShowPopup("Notification", "Banner ad is successfully loaded.");
+        PopupManager.Instance.ShowPopup("Notification", "Banner ad is successfully loaded.");
     }
 
     #endregion
@@ -94,7 +94,7 @@ public class AdManager : MotherScript
     private void OnInterstitialClosed(IronSourceAdInfo obj)
     {
         // Replace this method call with your own logic or remove it completely
-        ShowPopup("Notification", "Ad was showed successfully.\nNew ad is now loading.");
+        PopupManager.Instance.ShowPopup("Notification", "Ad was showed successfully.\nNew ad is now loading.");
         
         // Not this method call
         LoadInterstitialAd();
@@ -129,7 +129,7 @@ public class AdManager : MotherScript
     // Rewrite this method with your own logic or remove it completely
     private void OnRewardedVideoAvailabilityChangedEvent(bool obj)
     {
-        ShowPopup("Notification", "Video is ready to play");
+        PopupManager.Instance.ShowPopup("Notification", "Video is ready to play");
     }
     
     /// <summary>

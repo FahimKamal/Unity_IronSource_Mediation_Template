@@ -10,12 +10,6 @@ public class MainMenu : MotherScript
     private void Awake()
     {
         IronSource.Agent.init (ironSourceAppKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.BANNER);
-
-        if (GameObject.FindObjectOfType<CallBackManager>() == null)
-        {
-            var callBackManager = new GameObject("CallBackManager");
-            callBackManager.AddComponent<CallBackManager>();
-        }
     }
 
     private void Start()
@@ -31,7 +25,7 @@ public class MainMenu : MotherScript
     
     public void OnBannerOnButtonClick()
     {
-        ShowPopup("Notification", "You will see the test banner after this screen goes away.");
+        PopupManager.Instance.ShowPopup("Notification", "You will see the test banner after this screen goes away.");
 
         CallBackManager.Instance.onPopupClosed.RemoveAllListeners();
         CallBackManager.Instance.onPopupClosed.AddListener(AdManager.Instance.ShowBanner);
@@ -39,7 +33,7 @@ public class MainMenu : MotherScript
     
     public void OnBannerOffButtonClick()
     {
-        ShowPopup("Notification", "Test banner will now hide after this screen goes away.");
+        PopupManager.Instance.ShowPopup("Notification", "Test banner will now hide after this screen goes away.");
         
         CallBackManager.Instance.onPopupClosed.RemoveAllListeners();
         CallBackManager.Instance.onPopupClosed.AddListener(AdManager.Instance.HideBanner);

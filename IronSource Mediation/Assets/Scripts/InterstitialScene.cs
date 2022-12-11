@@ -22,7 +22,7 @@ public class InterstitialScene : MotherScript
     public void OnCheckButtonClicked()
     {
         var isReady = AdManager.Instance.IsInterstitialAdReady();
-        ShowPopup("Notification", isReady ? "Ad is ready to show." : "Ad is not ready to show.");
+        PopupManager.Instance.ShowPopup("Notification", isReady ? "Ad is ready to show." : "Ad is not ready to show.");
     }
 
     public void OnBackButtonPressed()

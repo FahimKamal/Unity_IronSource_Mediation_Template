@@ -354,7 +354,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f64e177050477c49924b5cc384307e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupPrefab: {fileID: 518775712009529825, guid: bfa61a3f46b18624bbff25cec1570476, type: 3}
   fadeScreen: {fileID: 139449812157717623, guid: cb10bff95c1c2854397042cc2d017f05, type: 3}
   ironSourceAppKey: 17a4eab05
 --- !u!4 &412008078
@@ -1235,6 +1234,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1195021615}
   m_CullTransparentMesh: 1
+--- !u!1001 &1207968878
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6032176785920239205, guid: a91d4f7a7f34fd94f9f12ed46dba44b3, type: 3}
+      propertyPath: m_Name
+      value: Popup Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032176785920239207, guid: a91d4f7a7f34fd94f9f12ed46dba44b3, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032176785920239207, guid: a91d4f7a7f34fd94f9f12ed46dba44b3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032176785920239207, guid: a91d4f7a7f34fd94f9f12ed46dba44b3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032176785920239207, guid: a91d4f7a7f34fd94f9f12ed46dba44b3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032176785920239207, guid: a91d4f7a7f34fd94f9f12ed46dba44b3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032176785920239207, guid: a91d4f7a7f34fd94f9f12ed46dba44b3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032176785920239207, guid: a91d4f7a7f34fd94f9f12ed46dba44b3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032176785920239207, guid: a91d4f7a7f34fd94f9f12ed46dba44b3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032176785920239207, guid: a91d4f7a7f34fd94f9f12ed46dba44b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032176785920239207, guid: a91d4f7a7f34fd94f9f12ed46dba44b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032176785920239207, guid: a91d4f7a7f34fd94f9f12ed46dba44b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a91d4f7a7f34fd94f9f12ed46dba44b3, type: 3}
 --- !u!1 &1233107438
 GameObject:
   m_ObjectHideFlags: 0
@@ -1532,7 +1588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2f890d75b24d88921f16b03a510176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupPrefab: {fileID: 518775712009529825, guid: bfa61a3f46b18624bbff25cec1570476, type: 3}
   fadeScreen: {fileID: 139449812157717623, guid: cb10bff95c1c2854397042cc2d017f05, type: 3}
   ironSourceAppKey: 17a4eab05
 --- !u!4 &1635615724

@@ -56,7 +56,7 @@ public class RewardedScene : MotherScript
         PlayerPrefs.SetInt("Coins", coins);
         CallBackManager.Instance.onCoinCollected?.Invoke();
         
-        ShowPopup("Notification",
+        PopupManager.Instance.ShowPopup("Notification",
             "Ad was showed successfully and you have been rewarded 100 coin.\nNew ad is now loading.");
         AdManager.Instance.LoadRewardedAd();
     }
@@ -73,7 +73,7 @@ public class RewardedScene : MotherScript
         PlayerPrefs.SetInt("Coins", coins);
         CallBackManager.Instance.onCoinCollected?.Invoke();
         
-        ShowPopup("Notification",
+        PopupManager.Instance.ShowPopup("Notification",
             "Ad was showed successfully and you have been rewarded 200 coin.\nNew ad is now loading.");
         AdManager.Instance.LoadRewardedAd();
     }
@@ -90,7 +90,7 @@ public class RewardedScene : MotherScript
         PlayerPrefs.SetInt("Coins", coins);
         CallBackManager.Instance.onCoinCollected?.Invoke();
         
-        ShowPopup("Notification",
+        PopupManager.Instance.ShowPopup("Notification",
             "Ad was showed successfully and you have been rewarded 300 coin.\nNew ad is now loading.");
         AdManager.Instance.LoadRewardedAd();
     }
@@ -98,12 +98,12 @@ public class RewardedScene : MotherScript
     public void OnCheckButtonClick()
     {
         var isReady = AdManager.Instance.IsRewardedAdReady();
-        ShowPopup("Notification", isReady ? "Ad is ready to play" : "Ad is not ready to play");
+        PopupManager.Instance.ShowPopup("Notification", isReady ? "Ad is ready to play" : "Ad is not ready to play");
     }
     
     public void OnResetCoinsButtonClick()
     {
-        ShowPopup("Notification", "Coin has been reset to 300");
+        PopupManager.Instance.ShowPopup("Notification", "Coin has been reset to 300");
         PlayerPrefs.SetInt("Coins", 300);
         UpdateCoinText();
     }

@@ -15,8 +15,9 @@ public class SetPopup : MonoBehaviour
         StartCoroutine(DestroyPopup());
     }
 
-    public void SetPopupData(string title, string description)
+    public void SetPopupData(string title, string description, float popupDuration)
     {
+        this.popupDuration = popupDuration;
         this.title.text = title;
         this.description.text = description;
         animationCom.Play("Popup Animation on");
