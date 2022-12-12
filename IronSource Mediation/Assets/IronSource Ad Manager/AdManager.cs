@@ -2,11 +2,16 @@
 using UnityEngine;
 
 // Replace MotherScript with MonoBehaviour if you want to use this script as a standalone script
-public class AdManager : MotherScript
+public class AdManager : MonoBehaviour
 {
     public static AdManager Instance;
     
-    [SerializeField] private string ironSourceAppKey = "17a4eab05";
+    [SerializeField] private string ironSourceAppKey = "17bb14b55";
+    
+    [Header("Initialization")]
+    [SerializeField] private bool bannerEnabled;
+    [SerializeField] private bool interstitialEnabled;
+    [SerializeField] private bool rewardedVideoEnabled;
 
     #region Singleton
 
@@ -16,19 +21,47 @@ public class AdManager : MotherScript
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            
             IronSource.Agent.init (ironSourceAppKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.BANNER);
+            IronSource.Agent.validateIntegration();
         }
         else
         {
             Destroy(gameObject);
         }
     }
-
+  
     #endregion
+
+    private void Start()
+    {
+        LoadAds();
+    }
+
+    private void LoadAds()
+    {
+        if (bannerEnabled)
+        {
+            LoadBanner();
+        }
+
+        if (interstitialEnabled)
+        {
+            LoadInterstitialAd();
+        }
+        
+        if (rewardedVideoEnabled)
+        {
+            LoadRewardedAd();
+        }
+    }
     
     private void OnApplicationPause(bool isPaused) {                 
         IronSource.Agent.onApplicationPause(isPaused);
+    }
+    
+    private static void AdNotLoadedPopup()
+    {
+        PopupManager.Instance.ShowPopup("Notification", "Ad not loaded yet.");
     }
 
     #region Banner
@@ -142,15 +175,24 @@ public class AdManager : MotherScript
         if (isReady)
         {
             IronSourceRewardedVideoEvents.ResetOnAdRewardedEvent();
+            IronSourceRewardedVideoEvents.onAdRewardedEvent += LoadNextAd;
             IronSourceRewardedVideoEvents.onAdRewardedEvent += rewardAction;
             
             IronSource.Agent.showRewardedVideo();
         }
         else
         {
-            IronSourceRewardedVideoEvents.ResetOnAdRewardedEvent();
             AdNotLoadedPopup();
         }
+    }
+    
+    private void LoadNextAd(IronSourcePlacement obj, IronSourceAdInfo arg2)
+    {
+        // Replace this method call with your own logic or remove it completely
+        PopupManager.Instance.ShowPopup("Notification", "Ad was showed successfully.\nNew ad is now loading.");
+        
+        // Not this method call
+        LoadRewardedAd();
     }
 
     /// <summary>
