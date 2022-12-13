@@ -2015,6 +2015,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6121477672683900470, guid: b0008d1878d391d48bd6cb3d201d88ba, type: 3}
+      propertyPath: bannerEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121477672683900470, guid: b0008d1878d391d48bd6cb3d201d88ba, type: 3}
+      propertyPath: bannerPosition
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121477672683900470, guid: b0008d1878d391d48bd6cb3d201d88ba, type: 3}
+      propertyPath: interstitialEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121477672683900470, guid: b0008d1878d391d48bd6cb3d201d88ba, type: 3}
+      propertyPath: rewardedVideoEnabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6121477672683900471, guid: b0008d1878d391d48bd6cb3d201d88ba, type: 3}
       propertyPath: m_Name
       value: AdManager

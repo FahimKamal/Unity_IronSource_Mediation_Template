@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using UnityEditor;
 using UnityEngine;
 
-// Replace MotherScript with MonoBehaviour if you want to use this script as a standalone script
 public class AdManager : MonoBehaviour
 {
     public static AdManager Instance;
@@ -10,6 +13,9 @@ public class AdManager : MonoBehaviour
     
     [Header("Initialization")]
     [SerializeField] private bool bannerEnabled;
+
+    [SerializeField, ShowIf(ActionOnConditionFail.DONT_DRAW, ConditionOperator.AND, nameof(bannerEnabled) )] 
+    private IronSourceBannerPosition bannerPosition = IronSourceBannerPosition.BOTTOM;
     [SerializeField] private bool interstitialEnabled;
     [SerializeField] private bool rewardedVideoEnabled;
 
@@ -68,7 +74,7 @@ public class AdManager : MonoBehaviour
 
     public void LoadBanner()
     {
-        IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.TOP);
+        IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, bannerPosition);
         
         IronSourceEvents.ResetOnBannerAdLoadedEvent();
         IronSourceEvents.onBannerAdLoadedEvent += OnBannerAdLoadedEvent;
