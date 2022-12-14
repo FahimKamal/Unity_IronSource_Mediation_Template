@@ -1,5 +1,5 @@
 # Unity_IronSource_Mediation_Template
-Template to implement ironSource mediation in a Unity game with sample UI. It's very simple to use, just add the prefab in your main scene. Now no matter on which scene you open in your game, that gameobject will always be active. See usage below for better understanding.
+Template to implement ironSource mediation in a Unity game with sample UI. It's very simple to use, just add the prefab in your main scene. Now no matter on which scene you open in your game, that gameobject will always be active. Also you will have to add another prefab PopupManager, you will find it in the package. That is another package I created for debugging purposes. You can easily deactivate it, see it in inspector. See usage below for better understanding.
 
 #### Note: it only works for android. iOS's integration will be added later on.
 
